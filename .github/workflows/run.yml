@@ -1,0 +1,30 @@
+name: Android AFK Runner
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'  # jalan otomatis tiap 6 jam biar tetap aktif
+
+jobs:
+  run-afk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y wget unzip curl qemu-system-x86
+
+      - name: Download Android emulator headless
+        run: |
+          wget https://github.com/waydroid/waydroid/releases/latest/download/waydroid.zip -O waydroid.zip
+          unzip waydroid.zip -d waydroid
+          echo "Emulator siap (headless mode)"
+
+      - name: Simulate AFK task
+        run: |
+          echo "Menjalankan AFK Roblox bot (simulasi tanpa tampilan)..."
+          sleep 6h
+          echo "Selesai 6 jam AFK cycle"
